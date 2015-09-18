@@ -46,12 +46,14 @@
     _synchronizationQueue = dispatch_queue_create("com.parse.dateFormatter", DISPATCH_QUEUE_SERIAL);
 
     //TODO: (nlutsenko) Check for error here.
+    /*
     sqlite3_open(":memory:", &_sqliteDatabase);
     sqlite3_prepare_v2(_sqliteDatabase,
                        "SELECT strftime('%s', ?), strftime('%f', ?);",
                        -1,
                        &_stringToDateStatement,
                        NULL);
+    */
 
     return self;
 }
@@ -92,6 +94,7 @@
 ///--------------------------------------
 
 - (NSDate *)dateFromString:(NSString *)string {
+    return [self.preciseDateFormatter dateFromString:string];
     __block sqlite3_int64 interval = 0;
     __block double seconds = 0.0;
     dispatch_sync(_synchronizationQueue, ^{
